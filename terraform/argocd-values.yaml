@@ -1,6 +1,12 @@
 server:
   ingress:
     enabled: true
+    hosts:
+    - argocd.k3s.saho.dev
+    tls:
+      - secretName: argocd-tls
+        hosts:
+          - argocd.k3s.saho.dev
 
 configs:
   params:
