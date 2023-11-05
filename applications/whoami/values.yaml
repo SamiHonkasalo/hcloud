@@ -1,5 +1,6 @@
 ingress:
   enabled: true
+  ingressClassName: traefik
   hosts:
     - whoami.k3s.saho.dev
   tls:
