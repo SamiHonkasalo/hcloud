@@ -1,13 +1,3 @@
-nameOverride: portfolio
-fullnameOverride: portfolio
-
-serviceAccount:
-  automount: true
-
-image:
-  repository: ghcr.io/samihonkasalo/saho-portfolio
-  tag: "latest"
-
 ingress:
   enabled: true
   annotations:

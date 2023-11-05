@@ -10,7 +10,7 @@ spec:
       prune: true
   sources:
     - repoURL: https://github.com/SamiHonkasalo/hcloud.git
-      path: charts/dummy
+      path: charts/portfolio
       helm:
         valueFiles:
           - $values/applications/portfolio/values.yaml
