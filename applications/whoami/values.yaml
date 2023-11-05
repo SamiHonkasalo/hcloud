@@ -1,0 +1,11 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: whoami.k3s.saho.dev
+      paths:
+        - /
+
+  tls:
+    - secretName: whoami-tls
+      hosts:
+        - whoami.k3s.saho.dev
