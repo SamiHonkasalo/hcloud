@@ -11,11 +11,11 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   ingressClassName: traefik
   hosts:
-    - host: k3s.saho.dev
+    - host: portfolio.k3s.saho.dev
       paths:
         - path: /
           pathType: Prefix
   tls:
     - secretName: portfolio-tls
       hosts:
-        - k3s.saho.dev
+        - portfolio.k3s.saho.dev
