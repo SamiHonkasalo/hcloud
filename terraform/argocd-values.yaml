@@ -1,6 +1,8 @@
 server:
   ingress:
     enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
     ingressClassName: traefik
     hosts:
       - argocd.95.216.155.80.nip.io
