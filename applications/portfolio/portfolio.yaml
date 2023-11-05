@@ -19,8 +19,3 @@ spec:
   destination:
     server: "https://kubernetes.default.svc"
     namespace: portfolio
-  ignoreDifferences:
-  - group: apps
-    kind: ServiceAccount
-    jqPathExpressions:
-    - .metadata.automountServiceAccountToken
