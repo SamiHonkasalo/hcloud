@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: portfolio
+  namespace: portfolio
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+  sources:
+    - repoURL: https://github.com/SamiHonkasalo/hcloud.git
+      path: charts/dummy
+      helm:
+        valueFiles:
+          - $values/applications/portfolio/values.yaml
+    - repoURL: https://github.com/SamiHonkasalo/hcloud.git
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: portfolio

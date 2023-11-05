@@ -1,0 +1,21 @@
+nameOverride: portfolio
+fullnameOverride: portfolio
+
+image:
+  repository: ghcr.io/samihonkasalo/saho-portfolio
+  tag: "latest"
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  ingressClassName: traefik
+  hosts:
+    - host: k3s.saho.dev
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: portfolio-tls
+      hosts:
+        - k3s.saho.dev
