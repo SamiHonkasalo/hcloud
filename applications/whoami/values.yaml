@@ -2,7 +2,9 @@ ingress:
   enabled: true
   ingressClassName: traefik
   hosts:
-    - whoami.k3s.saho.dev
+    - host: whoami.k3s.saho.dev
+      paths:
+        - /
   tls:
     - secretName: whoami-tls
       hosts:
