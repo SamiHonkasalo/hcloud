@@ -17,5 +17,5 @@ spec:
     - repoURL: https://github.com/SamiHonkasalo/hcloud.git
       ref: values
   destination:
-    server: https://kubernetes.default.svc
+    server: "https://kubernetes.default.svc"
     namespace: portfolio
