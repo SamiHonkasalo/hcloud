@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://cowboysysop.github.io/charts/
       chart: whoami
-      targetRevision: 1.10.1
+      targetRevision: 5.1.0
       helm:
         valueFiles:
           - $values/applications/whoami/values.yaml
