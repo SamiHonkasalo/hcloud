@@ -3,10 +3,11 @@ server:
     enabled: true
     ingressClassName: traefik
     hosts:
+      - argocd.95.216.155.80.nip.io
       - argocd.k3s.saho.dev
     tls:
       - secretName: argocd-tls
-        hosts:
+        hosts:          
           - argocd.k3s.saho.dev
 
 configs:
