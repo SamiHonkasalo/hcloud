@@ -23,4 +23,4 @@ spec:
   - group: apps
     kind: ServiceAccount
     jqPathExpressions:
-    - metadata.automountServiceAccountToken
+    - .metadata.automountServiceAccountToken
