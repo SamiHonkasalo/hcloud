@@ -44,18 +44,3 @@ spec:
           scheme: h2c
   tls:
     certResolver: default
-
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  namespace: argocd
-  name: argocd-tls
-spec:
-  commonName: argocd.k3s.saho.dev
-  secretName: argocd-tls
-  issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
-  dnsNames:
-    - "argocd.k3s.saho.dev"

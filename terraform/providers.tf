@@ -7,3 +7,7 @@ provider "helm" {
     config_path = "~/.kube/hcloud-config"
   }
 }
+
+provider "kubernetes" {
+  config_path = "~/.kube/hcloud-config"
+}

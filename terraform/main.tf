@@ -12,15 +12,44 @@ resource "hcloud_server" "k3s_control_plane" {
   user_data   = file("${path.module}/../cloud-config.yaml")
 }
 
-resource "time_sleep" "wait_for_cloud_init" {
-  depends_on      = [hcloud_server.k3s_control_plane]
-  create_duration = "2m"
+resource "null_resource" "wait_for_cloud_init" {
+  connection {
+    user        = "saho"
+    host        = hcloud_server.k3s_control_plane.ipv4_address
+    private_key = file("~/.ssh/hcloud")
+  }
+  provisioner "remote-exec" {
+    # This will fail if cloud-init restarts the machine
+    on_failure = continue
+    inline = [
+      "cloud-init status --wait > /dev/null"
+    ]
+  }
+  provisioner "remote-exec" {
+    # This will fail if cloud-init restarts the machine
+    on_failure = continue
+    inline = [
+      "cloud-init status --wait > /dev/null"
+    ]
+  }
+
+  # Wait for kubeconfig
+  provisioner "remote-exec" {
+    inline = [
+      "while [ ! -f ~/.kube/config ]; do sleep 5; done"
+    ]
+  }
 }
 
 
 resource "null_resource" "get_kubeconfig" {
-  depends_on = [time_sleep.wait_for_cloud_init]
+  depends_on = [null_resource.wait_for_cloud_init]
+
+  # Remove the host from known_hosts
   provisioner "local-exec" {
-    command = "scp -i ~/.ssh/hcloud saho@${hcloud_server.k3s_control_plane.ipv4_address}:~/.kube/config ~/.kube/hcloud-config && sed -n -i 's/127.0.0.1/${hcloud_server.k3s_control_plane.ipv4_address}/' ~/.kube/hcloud-config"
+    command = "ssh-keygen -f ~/.ssh/known_hosts -R ${hcloud_server.k3s_control_plane.ipv4_address}"
+  }
+  provisioner "local-exec" {
+    command = "scp -o StrictHostKeyChecking=accept-new -i ~/.ssh/hcloud saho@${hcloud_server.k3s_control_plane.ipv4_address}:~/.kube/config ~/.kube/hcloud-config && sed -i 's/127.0.0.1/${hcloud_server.k3s_control_plane.ipv4_address}/' ~/.kube/hcloud-config"
   }
 }

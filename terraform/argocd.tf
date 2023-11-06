@@ -1,5 +1,5 @@
 resource "helm_release" "argocd" {
-  depends_on       = [null_resource.get_kubeconfig]
+  depends_on       = [null_resource.apply_argo_cert]
   name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
