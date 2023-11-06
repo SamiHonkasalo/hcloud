@@ -3,6 +3,15 @@ variable "hcloud_token" {
   sensitive = true
 }
 
+variable "auth0_clientSecret" {
+  type      = string
+  sensitive = true
+}
+variable "auth0_clientId" {
+  type      = string
+  sensitive = true
+}
+
 variable "server_name" {
   default = "k3s-control-plane"
 }
