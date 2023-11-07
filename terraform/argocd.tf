@@ -29,7 +29,7 @@ resource "kubernetes_secret" "argocd_auth_secrets" {
 
 resource "kubernetes_config_map_v1_data" "configure_argocd_auth" {
   depends_on = [kubernetes_secret.argocd_auth_secrets]
-  force = true
+  force      = true
   metadata {
     name      = "argocd-cm"
     namespace = "argocd"
@@ -38,17 +38,16 @@ resource "kubernetes_config_map_v1_data" "configure_argocd_auth" {
     "admin.enabled"                = "false"
     "application.instanceLabelKey" = "argocd.argoproj.io/instance"
     "url"                          = "https://argocd.k3s.saho.dev"
-    "oidc.config"                  = <<EOT
+    "oidc.config"                  = <<-EOT
     name: Auth0
     issuer: https://sahodev.eu.auth0.com/
     cliClientID: ${var.auth0_clientId}
-    clientID: ${var.auth0_clientId}
+    clientID: ${var.auth0_clientId}    
     clientSecret: $argocd-auth-secret:oidc.auth0.clientSecret
     requestedScopes:
     - openid
     - profile
     - email
-    # - 'http://k3s.saho.dev/groups'
     EOT
   }
 }
