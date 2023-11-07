@@ -24,4 +24,4 @@ server:
 
 configs:
   cm:
-    create: false
+    admin.enabled: false
