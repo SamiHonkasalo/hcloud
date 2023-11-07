@@ -2,7 +2,7 @@ ingress:
   enabled: true
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-  ingressClassName: traefik
+  ingressClassName: nginx
   hosts:
     - host: whoami.k3s.saho.dev
       paths:

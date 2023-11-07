@@ -1,5 +1,5 @@
 resource "helm_release" "cert_manager" {
-  depends_on       = [null_resource.get_kubeconfig]
+  depends_on       = [helm_release.ingress-nginx]
   name             = "cert-manager"
   repository       = "https://charts.jetstack.io"
   chart            = "cert-manager"
