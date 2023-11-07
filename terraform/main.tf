@@ -22,14 +22,22 @@ resource "null_resource" "wait_for_cloud_init" {
     # This will fail if cloud-init restarts the machine
     on_failure = continue
     inline = [
-      "cloud-init status --wait > /dev/null"
+      "cloud-init status --wait"
     ]
   }
   provisioner "remote-exec" {
     # This will fail if cloud-init restarts the machine
     on_failure = continue
     inline = [
-      "cloud-init status --wait > /dev/null"
+      "cloud-init status --wait"
+    ]
+  }
+
+  provisioner "remote-exec" {
+    # This will fail if cloud-init restarts the machine
+    on_failure = continue
+    inline = [
+      "cloud-init status --wait"
     ]
   }
 
