@@ -15,7 +15,7 @@ resource "helm_release" "argocd" {
 resource "kubernetes_secret" "argocd_auth_secrets" {
   depends_on = [helm_release.argocd]
   metadata {
-    name      = "argocd-auth-secrets"
+    name      = "argocd-auth-secret"
     namespace = "argocd"
     labels = {
       "app.kubernetes.io/part-of" = "argocd"
@@ -23,8 +23,7 @@ resource "kubernetes_secret" "argocd_auth_secrets" {
   }
   type = "Opaque"
   data = {
-    "oidc.auth0.clientSecret" = base64encode(var.auth0_clientSecret)
-    "oidc.auth0.clientId"     = base64encode(var.auth0_clientId)
+    "oidc.auth0.clientSecret" = var.auth0_clientSecret
   }
 }
 
@@ -42,13 +41,14 @@ resource "kubernetes_config_map_v1_data" "configure_argocd_auth" {
     "oidc.config"                  = <<EOT
     name: Auth0
     issuer: https://sahodev.eu.auth0.com/
+    cliClientID: ${var.auth0_clientId}
     clientID: ${var.auth0_clientId}
-    clientSecret: $argocd-auth-secrets:oidc.auth0.clientSecret
+    clientSecret: $argocd-auth-secret:oidc.auth0.clientSecret
     requestedScopes:
     - openid
     - profile
     - email
-    #- "http://sahodev.eu.auth0.com/groups"
+    # - 'http://k3s.saho.dev/groups'
     EOT
   }
 }

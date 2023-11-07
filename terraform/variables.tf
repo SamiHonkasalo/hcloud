@@ -8,8 +8,7 @@ variable "auth0_clientSecret" {
   sensitive = true
 }
 variable "auth0_clientId" {
-  type      = string
-  sensitive = true
+  default = "UbHldl65BIesetdNMSX20YVNVnalkkkN"
 }
 
 variable "server_name" {
