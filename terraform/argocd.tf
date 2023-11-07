@@ -1,5 +1,5 @@
 resource "helm_release" "argocd" {
-  depends_on       = [null_resource.apply_argo_cert]
+  depends_on       = [helm_release.cert_manager]
   name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
@@ -27,15 +27,17 @@ resource "kubernetes_secret" "argocd_auth_secrets" {
   }
 }
 
-resource "kubernetes_config_map_v1_data" "configure_argocd_auth" {
+resource "kubernetes_config_map" "configure_argocd_auth" {
   depends_on = [kubernetes_secret.argocd_auth_secrets]
-  force      = true
   metadata {
     name      = "argocd-cm"
     namespace = "argocd"
   }
   data = {
     "admin.enabled"                = "false"
+    "exec.enabled"                 = "false"
+    "timeout.reconciliation"       = "180s"
+    "timeout.hard.reconciliation"  = "0s"
     "application.instanceLabelKey" = "argocd.argoproj.io/instance"
     "url"                          = "https://argocd.k3s.saho.dev"
     "oidc.config"                  = <<-EOT
