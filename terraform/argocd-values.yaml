@@ -4,28 +4,28 @@ server:
     ingressClassName: nginx
     https: false
     annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
+      cert-manager.io/cluster-issuer: letsencrypt-staging
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     hosts:
-      - argocd.k3s.saho.dev
+      - argocd.k3sdemo.saho.dev
     tls:
       - secretName: argocd-ingress-tls
         hosts:
-          - argocd.k3s.saho.dev
+          - argocd.k3sdemo.saho.dev
   ingressGrpc:
     enabled: true
     ingressClassName: nginx
     https: true
     annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
+      cert-manager.io/cluster-issuer: letsencrypt-staging
       nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
     hosts:
-      - grpc.argocd.k3s.saho.dev
+      - grpc.argocd.k3sdemo.saho.dev
     tls:
       - secretName: argocd-ingress-grpc-tls
         hosts:
-          - grpc.argocd.k3s.saho.dev
+          - grpc.argocd.k3sdemo.saho.dev
 
 configs:
   cm:

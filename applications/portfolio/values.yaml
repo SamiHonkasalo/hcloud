@@ -1,14 +1,14 @@
 ingress:
   enabled: true
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-staging
   className: nginx
   hosts:
-    - host: portfolio.k3s.saho.dev
+    - host: portfolio.k3sdemo.saho.dev
       paths:
         - path: /
           pathType: Prefix
   tls:
     - secretName: portfolio-tls
       hosts:
-        - portfolio.k3s.saho.dev
+        - portfolio.k3sdemo.saho.dev

@@ -37,7 +37,7 @@ resource "kubernetes_config_map_v1_data" "configure_argocd_auth" {
   data = {
     "admin.enabled"                = "false"
     "application.instanceLabelKey" = "argocd.argoproj.io/instance"
-    "url"                          = "https://argocd.k3s.saho.dev"
+    "url"                          = "https://argocd.k3sdemo.saho.dev"
     "oidc.config"                  = <<-EOT
     name: Auth0
     issuer: https://sahodev.eu.auth0.com/
