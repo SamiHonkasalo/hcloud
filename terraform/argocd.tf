@@ -48,6 +48,24 @@ resource "kubernetes_config_map_v1_data" "configure_argocd_auth" {
     - openid
     - profile
     - email
+    - https://saho.dev/roles
+    EOT
+  }
+}
+
+resource "kubernetes_config_map_v1_data" "configure_argocd_rbac" {
+  depends_on = [kubernetes_secret.argocd_auth_secrets]
+  force      = true
+  metadata {
+    name      = "argocd-rbac-cm"
+    namespace = "argocd"
+  }
+  data = {
+    # No default role
+    "policy.default" = ""
+    "scopes"     = "[https://saho.dev/roles]"
+    "policy.csv" = <<-EOT
+    g, argocd-admin, role:admin
     EOT
   }
 }
