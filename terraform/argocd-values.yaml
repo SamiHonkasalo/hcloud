@@ -4,7 +4,7 @@ server:
     ingressClassName: nginx
     https: false
     annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-staging
+      cert-manager.io/cluster-issuer: letsencrypt-prod
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     hosts:
@@ -18,7 +18,7 @@ server:
     ingressClassName: nginx
     https: true
     annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-staging
+      cert-manager.io/cluster-issuer: letsencrypt-prod
       nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
     hosts:
       - grpc.argocd.k3sdemo.saho.dev
