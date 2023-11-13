@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: whoami-auth
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+  sources:
+    - repoURL: https://cowboysysop.github.io/charts/
+      chart: whoami
+      targetRevision: 5.1.0
+      helm:
+        valueFiles:
+          - $values/applications/whoami-auth/values.yaml
+    - repoURL: https://github.com/SamiHonkasalo/hcloud.git
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: whoami
