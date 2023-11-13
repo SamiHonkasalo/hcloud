@@ -25,7 +25,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: oauth2-proxy-whoami
-  namespace: whoami
+  namespace: oauth2-proxy
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
   rules:
@@ -36,10 +38,10 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: oauth2-proxy.oauth2-proxy.svc.cluster.local
+                name: oauth2-proxy
                 port:
                   number: 4180
   tls:
     - hosts:
         - whoami-auth.k3sdemo.saho.dev
-      secretName: whoami-auth-tls
+      secretName: whoami-auth-tls-oauth2
