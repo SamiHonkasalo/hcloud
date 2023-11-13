@@ -23,17 +23,24 @@ resource "helm_release" "oauth2_proxy" {
     name  = "config.cookieSecret"
     value = random_password.cookie_secret.result
   }
-
   set {
-    name  = "extraArgs"
-    value = <<-EOT
-    provider: oidc
-    provider-display-name: Auth0
-    oidc-issues-url: https://sahodev.eu.auth0.com
-    skip-provider-button: true
-    pass-access-token: true
-    upstreams: file:///dev/null
-    EOT
+    name  = "extraArgs.provider"
+    value = "oidc"
   }
-
+  set {
+    name  = "extraArgs.provider-display-name"
+    value = "Auth0"
+  }
+  set {
+    name  = "extraArgs.oidc-issues-url"
+    value = "https://sahodev.eu.auth0.com"
+  }
+  set {
+    name  = "extraArgs.skip-provider-button"
+    value = "true"
+  }
+  set {
+    name  = "extraArgs.pass-access-token"
+    value = "true"
+  }
 }
