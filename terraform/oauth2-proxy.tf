@@ -47,4 +47,8 @@ resource "helm_release" "oauth2_proxy" {
     name  = "extraArgs.set-authorization-header"
     value = "true"
   }
+  set {
+    name  = "extraArgs.set-xauthrequest"
+    value = "true"
+  }
 }
