@@ -40,7 +40,7 @@ spec:
               service:
                 name: oauth2-proxy
                 port:
-                  number: 4180
+                  number: 80
   tls:
     - hosts:
         - whoami-auth.k3sdemo.saho.dev
