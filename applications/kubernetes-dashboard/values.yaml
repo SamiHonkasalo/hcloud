@@ -1,0 +1,19 @@
+app:
+  ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+  ingressClassName: nginx
+  secretName: kubernetes-dashboard-tls
+  hosts:
+    - kubernetes-dashboard.k3sdemo.saho.dev
+  issuer:
+    scope: disabled
+
+cert-manager:
+  enabled: false
+
+nginx:
+  enabled: false
