@@ -10,7 +10,7 @@ resource "helm_release" "oauth2_proxy" {
   chart            = "oauth2-proxy"
   version          = "6.19.0"
   namespace        = "oauth2-proxy"
-  create_namespace = true
+  create_namespace = true  
   set {
     name  = "config.clientID"
     value = var.auth0_clientId_k3s
@@ -32,8 +32,8 @@ resource "helm_release" "oauth2_proxy" {
     value = "Auth0"
   }
   set {
-    name  = "extraArgs.oidc-issues-url"
-    value = "https://sahodev.eu.auth0.com"
+    name  = "extraArgs.oidc-issuer-url"
+    value = "https://sahodev.eu.auth0.com/"
   }
   set {
     name  = "extraArgs.skip-provider-button"
