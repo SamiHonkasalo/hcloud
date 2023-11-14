@@ -74,7 +74,7 @@ resource "kubernetes_config_map_v1_data" "configure_argocd_rbac" {
 resource "null_resource" "deploy_argo_apps" {
   depends_on = [helm_release.argocd]
   triggers = {
-    dir_sha  = sha1(join("", [for f in fileset("${path.module}/../applications", "*.yaml") : filesha1("${"${path.module}/../applications"}/${f}")]))
+    # dir_sha  = sha1(join("", [for f in fileset("${path.module}/../applications", "*.yaml") : filesha1("${"${path.module}/../applications"}/${f}")]))
     file_sha = filesha1("${path.module}/argocd-applications.yaml")
   }
   provisioner "local-exec" {

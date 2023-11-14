@@ -5,6 +5,9 @@ app:
       cert-manager.io/cluster-issuer: letsencrypt-prod
       nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
       nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        auth_request_set $token $upstream_http_authorization; 
+        proxy_set_header Authorization $token;
     ingressClassName: nginx
     secretName: kubernetes-dashboard-tls
     hosts:
