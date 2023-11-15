@@ -11,6 +11,3 @@ package_upgrade: true
 package_reboot_if_required: true
 locale: fi_FI.utf8
 timezone: Europe/Helsinki
-runcmd:
-  - curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --disable traefik" sh -
-  - mkdir /home/saho/.kube && cp /etc/rancher/k3s/k3s.yaml /home/saho/.kube/config && chown saho /home/saho/.kube/config
