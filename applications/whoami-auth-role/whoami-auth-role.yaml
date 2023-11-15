@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: whoami-auth-role
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+  sources:
+    - repoURL: https://cowboysysop.github.io/charts/
+      chart: whoami
+      targetRevision: 5.1.0
+      helm:
+        valueFiles:
+          - $values/applications/whoami-auth-role/values.yaml
+    - repoURL: https://github.com/SamiHonkasalo/hcloud.git
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: whoami
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oauth2-proxy-whoami
+  namespace: oauth2-proxy
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: whoami-auth-role.k3sdemo.saho.dev
+      http:
+        paths:
+          - path: /oauth2
+            pathType: Prefix
+            backend:
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - whoami-auth-role.k3sdemo.saho.dev
+      secretName: whoami-auth-role-tls-oauth2
