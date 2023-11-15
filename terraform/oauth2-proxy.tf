@@ -36,6 +36,10 @@ resource "helm_release" "oauth2_proxy" {
     value = "https://sahodev.eu.auth0.com/"
   }
   set {
+    name  = "extraArgs.oidc-groups-claim"
+    value = "https://saho.dev/roles"
+  }
+  set {
     name  = "extraArgs.skip-provider-button"
     value = "true"
   }
