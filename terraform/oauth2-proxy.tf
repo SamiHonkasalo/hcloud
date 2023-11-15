@@ -48,6 +48,10 @@ resource "helm_release" "oauth2_proxy" {
     value = "true"
   }
   set {
+    name  = "extraArgs.pass-authorization-header"
+    value = "true"
+  }
+  set {
     name  = "extraArgs.set-authorization-header"
     value = "true"
   }
