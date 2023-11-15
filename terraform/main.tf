@@ -87,19 +87,3 @@ resource "null_resource" "get_kubeconfig" {
     command = "scp -o StrictHostKeyChecking=accept-new -i ~/.ssh/hcloud saho@${hcloud_server.k3s_control_plane.ipv4_address}:~/.kube/config ~/.kube/hcloud-config && sed -i 's/127.0.0.1/${hcloud_server.k3s_control_plane.ipv4_address}/' ~/.kube/hcloud-config"
   }
 }
-
-resource "kubernetes_cluster_role_binding" "oidc_cluster_admin" {
-  depends_on = [null_resource.get_kubeconfig]
-  metadata {
-    name = "oidc-cluster-admin"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "cluster-admin"
-  }
-  subject {
-    kind = "Group"
-    name = "oidc:k3s-admin"
-  }
-}
