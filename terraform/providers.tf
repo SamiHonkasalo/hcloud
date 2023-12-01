@@ -4,14 +4,23 @@ provider "hcloud" {
 
 provider "helm" {
   kubernetes {
-    config_path = "/tmp/.kube/hcloud-config"
+    host                   = local.kubeconfig_data.host
+    cluster_ca_certificate = local.kubeconfig_data.cluster_ca_certificate
+    client_certificate     = local.kubeconfig_data.client_certificate
+    client_key             = local.kubeconfig_data.client_key
   }
 }
 
 provider "kubernetes" {
-  config_path = "/tmp/.kube/hcloud-config"
+  host                   = local.kubeconfig_data.host
+  cluster_ca_certificate = local.kubeconfig_data.cluster_ca_certificate
+  client_certificate     = local.kubeconfig_data.client_certificate
+  client_key             = local.kubeconfig_data.client_key
 }
 
 provider "kubectl" {
-  config_path = "/tmp/.kube/hcloud-config"
+  host                   = local.kubeconfig_data.host
+  cluster_ca_certificate = local.kubeconfig_data.cluster_ca_certificate
+  client_certificate     = local.kubeconfig_data.client_certificate
+  client_key             = local.kubeconfig_data.client_key
 }

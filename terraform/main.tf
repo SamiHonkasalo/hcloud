@@ -86,13 +86,14 @@ data "remote_file" "kubeconfig" {
 }
 
 locals {
-  kubeconfig = replace(data.remote_file.kubeconfig.content, "127.0.0.1", hcloud_server.k3s_control_plane.ipv4_address)
-}
-
-
-resource "local_sensitive_file" "kubeconfig" {  
-  content         = local.kubeconfig
-  filename        = "/tmp/.kube/hcloud-config"
+  kubeconfig        = replace(data.remote_file.kubeconfig.content, "127.0.0.1", hcloud_server.k3s_control_plane.ipv4_address)
+  kubeconfig_parsed = yamldecode(local.kubeconfig)
+  kubeconfig_data = {
+    host                   = local.kubeconfig_parsed.clusters[0].cluster.server
+    client_certificate     = base64decode(local.kubeconfig_parsed.users[0].user.client-certificate-data)
+    client_key             = base64decode(local.kubeconfig_parsed.users[0].user.client-key-data)
+    cluster_ca_certificate = base64decode(local.kubeconfig_parsed.clusters[0].cluster.certificate-authority-data)
+  }
 }
 
 output "kubeconfig" {
