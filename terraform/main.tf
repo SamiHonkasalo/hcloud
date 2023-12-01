@@ -76,7 +76,7 @@ resource "null_resource" "install_k3s" {
 }
 
 data "remote_file" "kubeconfig" {
-  depends_on = [null_resource.install_k3s, local.k3s_version, local.k3s_args]
+  depends_on = [null_resource.install_k3s]
   conn {
     host        = hcloud_server.k3s_control_plane.ipv4_address
     user        = "saho"
