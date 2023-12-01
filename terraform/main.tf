@@ -82,7 +82,7 @@ data "remote_file" "kubeconfig" {
     user        = "saho"
     private_key = var.hcloud_private_key
   }
-  path = "~/.kube/config"
+  path = "/home/saho/.kube/config"
 }
 
 locals {
@@ -94,4 +94,10 @@ resource "local_sensitive_file" "kubeconfig" {
   content         = local.kubeconfig
   filename        = "~/.kube/hcloud-config"
   file_permission = "600"
+}
+
+output "kubeconfig" {
+  value       = local.kubeconfig
+  description = "Kubeconfig file content with external IP address"
+  sensitive   = true
 }

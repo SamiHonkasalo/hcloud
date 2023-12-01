@@ -14,10 +14,5 @@ resource "helm_release" "cert_manager" {
 
 resource "kubectl_manifest" "cluster_issuers" {
   depends_on = [helm_release.cert_manager]
-  lifecycle {
-    replace_triggered_by = [
-      filesha1("${path.module}/cluster-issuers.yaml")
-    ]
-  }
-  yaml_body = file("${path.module}/cluster-issuers.yaml")
+  yaml_body  = file("${path.module}/cluster-issuers.yaml")
 }

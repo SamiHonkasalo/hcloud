@@ -72,10 +72,5 @@ resource "kubernetes_config_map_v1_data" "configure_argocd_rbac" {
 
 resource "kubectl_manifest" "argocd_applications" {
   depends_on = [helm_release.argocd]
-  lifecycle {
-    replace_triggered_by = [
-      filesha1("${path.module}/argocd-applications.yaml")
-    ]
-  }
-  yaml_body = file("${path.module}/argocd-applications.yaml")
+  yaml_body  = file("${path.module}/argocd-applications.yaml")
 }
