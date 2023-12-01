@@ -93,7 +93,6 @@ locals {
 resource "local_sensitive_file" "kubeconfig" {
   content         = local.kubeconfig
   filename        = "~/.kube/hcloud-config"
-  file_permission = "600"
 }
 
 output "kubeconfig" {
