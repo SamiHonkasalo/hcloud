@@ -78,11 +78,7 @@ resource "null_resource" "install_k3s" {
 
 resource "null_resource" "get_kubeconfig" {
   depends_on = [null_resource.install_k3s]
-
-  # Remove the host from known_hosts
-  provisioner "local-exec" {
-    command = "ssh-keygen -f ~/.ssh/known_hosts -R ${hcloud_server.k3s_control_plane.ipv4_address}"
-  }
+  
   # Save the ssh key into a temp file
   provisioner "local-exec" {
     command = "echo ${var.hcloud_private_key} > /tmp/.ssh/hcloud"
