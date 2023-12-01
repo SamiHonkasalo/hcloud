@@ -82,7 +82,7 @@ data "remote_file" "kubeconfig" {
     user        = "saho"
     private_key = var.hcloud_private_key
   }
-  path = "/home/saho/.kube/config"
+  path = "/etc/rancher/k3s/k3s.yaml"
 }
 
 locals {
