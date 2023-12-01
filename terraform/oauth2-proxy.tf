@@ -37,7 +37,7 @@ resource "helm_release" "oauth2_proxy" {
   }
   set {
     name  = "extraArgs.oidc-groups-claim"
-    value = "groups"
+    value = "userRoles"
   }
   set {
     name  = "extraArgs.skip-provider-button"

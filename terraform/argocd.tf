@@ -48,7 +48,7 @@ resource "kubernetes_config_map_v1_data" "configure_argocd_auth" {
     - openid
     - profile
     - email
-    - groups
+    - userRoles
     EOT
   }
 }
@@ -63,7 +63,7 @@ resource "kubernetes_config_map_v1_data" "configure_argocd_rbac" {
   data = {
     # No default role
     "policy.default" = ""
-    "scopes"         = "[groups]"
+    "scopes"         = "[userRoles]"
     "policy.csv"     = <<-EOT
     g, argocd-admin, role:admin
     EOT
