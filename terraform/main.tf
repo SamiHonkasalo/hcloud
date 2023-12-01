@@ -75,23 +75,23 @@ resource "null_resource" "install_k3s" {
   }
 }
 
-
-resource "null_resource" "get_kubeconfig" {
+data "remote_file" "kubeconfig" {
   depends_on = [null_resource.install_k3s]
+  conn {
+    host        = hcloud_server.k3s_control_plane.ipv4_address
+    user        = "saho"
+    private_key = var.hcloud_private_key
+  }
+  path = "~/.kube/config"
+}
 
-  # Create the directory for the ssh key
-  provisioner "local-exec" {
-    command = "mkdir ~/.ssh"
-  }
-  # Save the ssh key into a temp file
-  provisioner "local-exec" {
-    command = "echo '${var.hcloud_private_key}' > ~/.ssh/hcloud && chmod 600 ~/.ssh/hcloud"
-  }
-  # Create the directory for the kubeconfig
-  provisioner "local-exec" {
-    command = "mkdir ~/.kube"
-  }
-  provisioner "local-exec" {
-    command = "scp -o StrictHostKeyChecking=accept-new -i ~/.ssh/hcloud saho@${hcloud_server.k3s_control_plane.ipv4_address}:~/.kube/config ~/.kube/hcloud-config && sed -i 's/127.0.0.1/${hcloud_server.k3s_control_plane.ipv4_address}/' ~/.kube/hcloud-config"
-  }
+locals {
+  kubeconfig = replace(data.remote_file.kubeconfig.content, "127.0.0.1", hcloud_server.k3s_control_plane.ipv4_address)
+}
+
+
+resource "local_sensitive_file" "kubeconfig" {
+  content         = local.kubeconfig
+  filename        = "~/.kube/hcloud-config"
+  file_permission = "600"
 }
