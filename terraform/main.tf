@@ -78,10 +78,10 @@ resource "null_resource" "install_k3s" {
 
 resource "null_resource" "get_kubeconfig" {
   depends_on = [null_resource.install_k3s]
-  
+
   # Save the ssh key into a temp file
   provisioner "local-exec" {
-    command = "echo ${var.hcloud_private_key} > /tmp/.ssh/hcloud"
+    command = "echo '${var.hcloud_private_key}' > /tmp/.ssh/hcloud"
   }
   provisioner "local-exec" {
     command = "scp -o StrictHostKeyChecking=accept-new -i /tmp/.ssh/hcloud saho@${hcloud_server.k3s_control_plane.ipv4_address}:~/.kube/config ~/.kube/hcloud-config && sed -i 's/127.0.0.1/${hcloud_server.k3s_control_plane.ipv4_address}/' ~/.kube/hcloud-config"
