@@ -81,9 +81,9 @@ resource "null_resource" "get_kubeconfig" {
 
   # Save the ssh key into a temp file
   provisioner "local-exec" {
-    command = "echo '${var.hcloud_private_key}' > /tmp/hcloud-ssh"
+    command = "echo '${var.hcloud_private_key}' > ~/.ssh/hcloud"
   }
   provisioner "local-exec" {
-    command = "scp -o StrictHostKeyChecking=accept-new -i /tmp/hcloud-ssh saho@${hcloud_server.k3s_control_plane.ipv4_address}:~/.kube/config ~/.kube/hcloud-config && sed -i 's/127.0.0.1/${hcloud_server.k3s_control_plane.ipv4_address}/' ~/.kube/hcloud-config"
+    command = "scp -o StrictHostKeyChecking=accept-new -i ~/.ssh/hcloud saho@${hcloud_server.k3s_control_plane.ipv4_address}:~/.kube/config ~/.kube/hcloud-config && sed -i 's/127.0.0.1/${hcloud_server.k3s_control_plane.ipv4_address}/' ~/.kube/hcloud-config"
   }
 }
