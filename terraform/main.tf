@@ -101,3 +101,8 @@ output "kubeconfig" {
   description = "Kubeconfig file content with external IP address"
   sensitive   = true
 }
+
+output "host" {
+  value       = local.kubeconfig_data.host
+  description = "Host IP address"
+}
