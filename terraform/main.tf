@@ -42,7 +42,7 @@ resource "null_resource" "wait_for_cloud_init" {
 
 locals {
   k3s_version = "v1.28.3+k3s2"
-  k3s_args    = "--disable=traefik --kube-apiserver-arg=oidc-issuer-url=https://sahodev.eu.auth0.com/ --kube-apiserver-arg=oidc-client-id=${var.auth0_clientId_k3s} --kube-apiserver-arg=oidc-groups-prefix=oidc: --kube-apiserver-arg=oidc-groups-claim=userRoles"
+  k3s_args    = "--disable=traefik --kube-apiserver-arg=oidc-issuer-url=https://sahodev.eu.auth0.com/ --kube-apiserver-arg=oidc-client-id=${var.auth0_clientId} --kube-apiserver-arg=oidc-groups-prefix=oidc: --kube-apiserver-arg=oidc-groups-claim=userRoles"
 }
 
 resource "null_resource" "install_k3s" {

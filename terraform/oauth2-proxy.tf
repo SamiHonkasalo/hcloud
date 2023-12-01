@@ -13,11 +13,11 @@ resource "helm_release" "oauth2_proxy" {
   create_namespace = true  
   set {
     name  = "config.clientID"
-    value = var.auth0_clientId_k3s
+    value = var.auth0_clientId
   }
   set {
     name  = "config.clientSecret"
-    value = var.auth0_clientSecret_k3s
+    value = var.auth0_clientSecret
   }
   set {
     name  = "config.cookieSecret"
