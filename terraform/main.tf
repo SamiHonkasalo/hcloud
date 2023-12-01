@@ -76,13 +76,12 @@ resource "null_resource" "install_k3s" {
 }
 
 data "remote_file" "kubeconfig" {
-  depends_on = [null_resource.install_k3s, local.k3s_version, local.k3s_args]
   conn {
     host        = hcloud_server.k3s_control_plane.ipv4_address
     user        = "saho"
     private_key = var.hcloud_private_key
   }
-  path = "/etc/rancher/k3s/k3s.yaml"
+  path = "/home/saho/.kube/config"
 }
 
 locals {
