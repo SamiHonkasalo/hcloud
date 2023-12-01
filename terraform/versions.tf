@@ -1,6 +1,14 @@
 terraform {
   required_version = ">= 1.5.7"
 
+  cloud {
+    organization = "sahodev"
+
+    workspaces {
+      name = "hcloud"
+    }
+  }
+
   required_providers {
     hcloud = {
       source  = "hetznercloud/hcloud"

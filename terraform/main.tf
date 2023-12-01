@@ -1,6 +1,6 @@
 resource "hcloud_ssh_key" "hcloud_key" {
   name       = "hcloud_key"
-  public_key = file("~/.ssh/hcloud.pub")
+  public_key = var.hcloud_pub_key
 }
 
 resource "hcloud_server" "k3s_control_plane" {
@@ -16,7 +16,7 @@ resource "null_resource" "wait_for_cloud_init" {
   connection {
     user        = "saho"
     host        = hcloud_server.k3s_control_plane.ipv4_address
-    private_key = file("~/.ssh/hcloud")
+    private_key = var.hcloud_private_key
   }
   provisioner "remote-exec" {
     # This will fail if cloud-init restarts the machine
@@ -54,7 +54,7 @@ resource "null_resource" "install_k3s" {
   connection {
     user        = "saho"
     host        = hcloud_server.k3s_control_plane.ipv4_address
-    private_key = file("~/.ssh/hcloud")
+    private_key = var.hcloud_private_key
   }
 
   # Install k3s
