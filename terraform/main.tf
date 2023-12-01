@@ -90,9 +90,9 @@ locals {
 }
 
 
-resource "local_sensitive_file" "kubeconfig" {
+resource "local_sensitive_file" "kubeconfig" {  
   content         = local.kubeconfig
-  filename        = "~/.kube/hcloud-config"
+  filename        = "/tmp/.kube/hcloud-config"
 }
 
 output "kubeconfig" {

@@ -4,14 +4,14 @@ provider "hcloud" {
 
 provider "helm" {
   kubernetes {
-    config_path = "~/.kube/hcloud-config"
+    config_path = "/tmp/.kube/hcloud-config"
   }
 }
 
 provider "kubernetes" {
-  config_path = "~/.kube/hcloud-config"
+  config_path = "/tmp/.kube/hcloud-config"
 }
 
 provider "kubectl" {
-  config_path = "~/.kube/hcloud-config"
+  config_path = "/tmp/.kube/hcloud-config"
 }
