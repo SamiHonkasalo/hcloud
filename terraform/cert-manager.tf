@@ -12,7 +12,12 @@ resource "helm_release" "cert_manager" {
   }
 }
 
-resource "kubectl_manifest" "cluster_issuers" {
+data "kubectl_path_documents" "cluster_issuers" {
+  pattern = "${path.module}/cluster-issuers.yaml"
+}
+
+resource "kubectl_manifest" "apply_cluster_issuers" {
   depends_on = [helm_release.cert_manager]
-  yaml_body  = file("${path.module}/cluster-issuers.yaml")
+  for_each   = toset(data.kubectl_path_documents.cluster_issuers.documents)
+  yaml_body  = each.value
 }
