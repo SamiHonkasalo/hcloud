@@ -12,3 +12,6 @@ ingress:
     - secretName: lobby-tls
       hosts:
         - lobby.k3sdemo.saho.dev
+
+service:
+  port: 8080
