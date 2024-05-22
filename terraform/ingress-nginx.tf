@@ -9,4 +9,8 @@ resource "helm_release" "ingress-nginx" {
     name  = "controller.config.proxy-buffer-size"
     value = "16k"
   }
+  set {
+    name  = "udp.8888"
+    value = "backdash-lobby/backdash-lobby:8888"
+  }
 }
