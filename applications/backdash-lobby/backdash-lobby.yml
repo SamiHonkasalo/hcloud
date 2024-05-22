@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backdash-lobby
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+  sources:
+    - repoURL: https://github.com/SamiHonkasalo/hcloud.git
+      path: charts/backdash-lobby
+      helm:
+        valueFiles:
+          - $values/applications/backdash-lobby/values.yaml
+    - repoURL: https://github.com/SamiHonkasalo/hcloud.git
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: backdash-lobby
