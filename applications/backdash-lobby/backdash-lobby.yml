@@ -13,7 +13,7 @@ spec:
       path: charts/backdash-lobby
       helm:
         valueFiles:
-          - $values/applications/backdash-lobby/values.yaml
+          - $values/applications/backdash-lobby/values.yml
     - repoURL: https://github.com/SamiHonkasalo/hcloud.git
       ref: values
   destination:
