@@ -11,5 +11,9 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: {{ .Values.service.udpPort }}
+      targetPort: UDP
+      protocol: UDP
+      name: UDP
   selector:
     {{- include "backdash-lobby.selectorLabels" . | nindent 4 }}

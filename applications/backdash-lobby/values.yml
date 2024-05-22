@@ -15,3 +15,4 @@ ingress:
 
 service:
   port: 8080
+  udpPort: 8888

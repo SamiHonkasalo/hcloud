@@ -40,6 +40,9 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+            - name: UDP
+              containerPort: {{ .Values.service.udpPort }}
+              protocol: UDP
           livenessProbe:
             httpGet:
               path: /health
