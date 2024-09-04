@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/samihonkasalo/backdash-lobby
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "main"
+  tag: "sha-316c716"
 
 imagePullSecrets: []
 nameOverride: ""
