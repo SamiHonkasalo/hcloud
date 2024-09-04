@@ -13,4 +13,8 @@ resource "helm_release" "ingress-nginx" {
     name  = "udp.8888"
     value = "backdash-lobby/backdash-lobby:8888"
   }
+  set {
+    name  = "controller.service.externalTrafficPolicy"
+    value = "Local"
+  }
 }
